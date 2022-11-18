@@ -1,0 +1,1 @@
+INSERT INTO tb_post (id, title, author, body, category, created_At) VALUES (UUID(), 'Crie uma rotina de banho para dormir', 'Persono', 'O banho é um ótimo companheiro para nos acordar pelas manhãs, sobretudo quando começamos o dia bem cedo. Mas ele também pode ser perfeito para encerrar o dia, nos preparando para dormir', 'Sono e Ciência', NOW());
