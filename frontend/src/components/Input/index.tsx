@@ -13,7 +13,11 @@ export const Input = ({ posts, filteredPosts, setFilteredPosts }: PropType) => {
     } else if (filteredPosts.length === posts.length && value === "") {
       setPostLegend("Exibindo todos os posts");
     } else {
-      setPostLegend(`Exibindo ${filteredPosts.length} post${filteredPosts.length === 1 ? '' : 's'} para: ${value}`);
+      setPostLegend(
+        `Exibindo ${filteredPosts.length} post${
+          filteredPosts.length === 1 ? "" : "s"
+        } para: ${value}`
+      );
     }
   }, [posts, filteredPosts, value]);
 
@@ -55,5 +59,5 @@ export const Input = ({ posts, filteredPosts, setFilteredPosts }: PropType) => {
 type PropType = {
   posts: Post[] | undefined;
   filteredPosts: Post[] | undefined;
-  setFilteredPosts: Function;
+  setFilteredPosts: React.Dispatch<React.SetStateAction<Post[] | undefined>>;
 };

@@ -1,13 +1,18 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+
 import { PostCard } from "./components/PostCard";
 import { Post } from "./types";
-import axios from "axios";
 import { Input } from "./components/Input";
+
+import "./assets/app.css"
+import { NewPostModal } from "./components/NewPostModal";
 
 function App() {
   const [posts, setPosts] = useState<Post[]>();
-  const [filteredPosts, setFilteredPosts]  = useState<Post[]>();
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>();
   const [loading, setLoading] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     axios
@@ -26,9 +31,21 @@ function App() {
   } else {
     return (
       <>
+        <NewPostModal
+          modalShow={modalShow}
+          setModalShow={setModalShow}
+        />
         <div className="container-fluid bg">
           <div className="container mt-3">
-            <Input posts={posts} filteredPosts={filteredPosts} setFilteredPosts={setFilteredPosts} />
+            <div className="title d-flex justify-content-between">
+              <h1 className="display-4 mt-4 mb-3">Posts</h1>
+              <button className="display-4" onClick={() => setModalShow(true)}>+</button>
+            </div>
+            <Input
+              posts={posts}
+              filteredPosts={filteredPosts}
+              setFilteredPosts={setFilteredPosts}
+            />
             {filteredPosts?.map((post, index) => {
               return (
                 <PostCard
