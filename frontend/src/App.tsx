@@ -28,7 +28,7 @@ function App() {
       <>
         <div className="container-fluid bg">
           <div className="container mt-3">
-            <Input posts={posts} setFilteredPosts={setFilteredPosts} />
+            <Input posts={posts} filteredPosts={filteredPosts} setFilteredPosts={setFilteredPosts} />
             {filteredPosts?.map((post, index) => {
               return (
                 <PostCard

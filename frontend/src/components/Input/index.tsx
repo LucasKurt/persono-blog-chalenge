@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import { Post } from "../../types";
 import "./styles.css";
 
-export const Input = ({ posts, setFilteredPosts }: PropType) => {
+export const Input = ({ posts, filteredPosts, setFilteredPosts }: PropType) => {
   const [value, setValue] = useState("");
   const [hidden, setHidden] = useState("hidden");
   const [postLegend, setPostLegend] = useState("");
 
   useEffect(() => {
-    if (!posts || posts.length === 0) {
-      setPostLegend("Não há postagens postagens");
-    } else {
+    if (!posts || !filteredPosts) {
+      setPostLegend("Não há postagens disponíveis");
+    } else if (filteredPosts.length === posts.length && value === "") {
       setPostLegend("Exibindo todos os posts");
+    } else {
+      setPostLegend(`Exibindo ${filteredPosts.length} post${filteredPosts.length === 1 ? '' : 's'} para: ${value}`);
     }
-  }, [posts]);
+  }, [posts, filteredPosts, value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -21,13 +23,6 @@ export const Input = ({ posts, setFilteredPosts }: PropType) => {
     if (posts) {
       const filteredPosts = posts.filter((post) =>
         post.title.toLowerCase().includes(e.target.value.toLowerCase())
-      );
-      setPostLegend(
-        filteredPosts.length === 0
-          ? "Não há postagens postagens"
-          : `Exibindo ${filteredPosts.length} post${
-              filteredPosts.length === 0 ? "" : "s"
-            } para: ${e.target.value}`
       );
       setFilteredPosts(filteredPosts);
     }
@@ -52,12 +47,13 @@ export const Input = ({ posts, setFilteredPosts }: PropType) => {
           Limpar
         </button>
       </div>
-      <p className="mt-3">{postLegend}</p>
+      <p>{postLegend}</p>
     </>
   );
 };
 
 type PropType = {
   posts: Post[] | undefined;
+  filteredPosts: Post[] | undefined;
   setFilteredPosts: Function;
 };
