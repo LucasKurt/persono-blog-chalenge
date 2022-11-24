@@ -7,11 +7,16 @@ export const TextArea = ({ name, placeholder, value, handleChange, postErrors }:
   const [err, setErr] = useState<PostError>();
 
   useEffect(() => {
+    let valid = false;
     postErrors?.forEach((error) => {
       if (name === error.fieldName) {
         setErr(error);
+        valid = true;
       }
     });
+    if(!valid) {
+      setErr(undefined);
+    }
   }, [postErrors, name]);
 
   return (

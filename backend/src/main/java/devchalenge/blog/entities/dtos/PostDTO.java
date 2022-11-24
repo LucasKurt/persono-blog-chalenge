@@ -20,7 +20,7 @@ public class PostDTO {
 	@Size(min = 10, message = "O corpo da menságem deve ter pelo menos 10 caracteres")
 	private String body;
 	
-	@Size(min = 4, message = "O título deve ter pelo menos 4 caracteres")
+	@Size(min = 4, message = "A categoria deve ter pelo menos 4 caracteres")
 	private String category;
 	private Instant createdAt;
 	private Instant updatedAt;
