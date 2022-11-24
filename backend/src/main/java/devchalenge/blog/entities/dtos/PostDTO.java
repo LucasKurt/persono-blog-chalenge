@@ -3,14 +3,24 @@ package devchalenge.blog.entities.dtos;
 import java.time.Instant;
 import java.util.UUID;
 
+import javax.validation.constraints.Size;
+
 import devchalenge.blog.entities.Post;
 
 public class PostDTO {
 
 	private UUID id;
+	
+	@Size(min = 2, message = "O título deve ter pelo menos 2 caracteres")
 	private String title;
+	
+	@Size(min = 2, message = "O nome do autor deve ter pelo menos 2 caracteres")
 	private String author;
+	
+	@Size(min = 10, message = "O corpo da menságem deve ter pelo menos 10 caracteres")
 	private String body;
+	
+	@Size(min = 4, message = "O título deve ter pelo menos 4 caracteres")
 	private String category;
 	private Instant createdAt;
 	private Instant updatedAt;

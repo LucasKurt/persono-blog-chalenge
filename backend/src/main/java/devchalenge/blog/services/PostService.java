@@ -22,4 +22,12 @@ public class PostService {
 		
 		return list.stream().map(entity -> new PostDTO(entity)).toList();
 	}
+	
+	@Transactional
+	public PostDTO insert(PostDTO dto) {
+		Post entity = new Post(null, dto.getTitle(), dto.getAuthor(), dto.getBody(), dto.getCategory());		
+		entity = repository.save(entity);
+		
+		return new PostDTO(entity);
+	}
 }
