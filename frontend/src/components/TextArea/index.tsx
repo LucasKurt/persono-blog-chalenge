@@ -1,16 +1,23 @@
+import { useEffect, useState } from "react";
 import { ChangeEventHandler } from "react";
+import { PostError } from "../../types";
 
-export const TextArea = ({
-  name,
-  placeholder,
-  value,
-  handleChange,
-  error,
-}: PropType) => {
+export const TextArea = ({ name, placeholder, value, handleChange, postErrors }: PropType) => {
+
+  const [err, setErr] = useState<PostError>();
+
+  useEffect(() => {
+    postErrors?.forEach((error) => {
+      if (name === error.fieldName) {
+        setErr(error);
+      }
+    });
+  }, [postErrors, name]);
+
   return (
     <div className="mb-3">
       <textarea
-        className="form-control"
+        className={`form-control ${!!err ? 'border-danger' : ''}`}
         name={name}
         id={name}
         placeholder={placeholder}
@@ -18,9 +25,9 @@ export const TextArea = ({
         onChange={handleChange}
         required
       />
-      {error && (
+      {!!err && (
         <div className="form-text text-danger">
-          We'll never share your email with anyone else.
+         {err.message}
         </div>
       )}
     </div>
@@ -32,5 +39,6 @@ type PropType = {
   placeholder: string;
   value: string;
   handleChange: ChangeEventHandler<HTMLTextAreaElement>;
+  postErrors: PostError[] | undefined;
   error?: boolean;
 };

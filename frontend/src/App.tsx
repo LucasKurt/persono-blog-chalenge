@@ -24,7 +24,7 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [modalShow]);
 
   if (loading) {
     return <h1>Carregando posts...</h1>;

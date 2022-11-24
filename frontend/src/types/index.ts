@@ -7,3 +7,8 @@ export type Post = {
     createdAt: Date,
     updatedAt: Date
 }
+
+export type PostError = {
+    fieldName: String,
+    message: String,
+}

@@ -1,17 +1,23 @@
+import { useEffect, useState } from "react";
 import { ChangeEventHandler } from "react";
+import { PostError } from "../../types";
 
-export const FormInput = ({
-  name,
-  type,
-  placeholder,
-  value,
-  handleChange,
-  error,
-}: PropType) => {
+export const FormInput = ({ name, type, placeholder, value, handleChange, postErrors }: PropType) => {
+
+  const [err, setErr] = useState<PostError>();
+
+  useEffect(() => {
+    postErrors?.forEach((error) => {
+      if (name === error.fieldName) {
+        setErr(error);
+      }
+    });
+  }, [postErrors, name]);
+
   return (
     <div className="mb-3">
       <input
-        className="form-control"
+        className={`form-control ${!!err ? 'border-danger' : ''}`}
         type={type}
         name={name}
         id={name}
@@ -20,9 +26,9 @@ export const FormInput = ({
         onChange={handleChange}
         required
       />
-      {error && (
+      {!!err && (
         <div className="form-text text-danger">
-          We'll never share your email with anyone else.
+          {err.message}
         </div>
       )}
     </div>
@@ -35,5 +41,6 @@ type PropType = {
   placeholder: string;
   value: string;
   handleChange: ChangeEventHandler<HTMLInputElement>;
+  postErrors: PostError[] | undefined
   error?: boolean;
 };
